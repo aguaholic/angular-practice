@@ -2,28 +2,41 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-exercises',
+  // <button
+  //     class="btn btn-primary"
+  //     (click)="showSecret = !showSecret"
+  //   >
+  //     Display Details
+  //   </button>
   template: `
-    <p>Input Field</p>
-    <input type="text" class="form-control" [(ngModel)]="username" />
-    <p>{{ username }}</p>
-    <button
-      class="btn btn-primary"
-      [disabled]="username === ''"
-      (click)="username = ''"
-    >
-      Reset user
+    <button class="btn btn-primary" (click)="onToggleDetails()">
+      Display Details
     </button>
+    <p *ngIf="showSecret">This is a cute paragraph</p>
+    <div
+      *ngFor="let logItem of log"
+      [ngStyle]="{ backgroundColor: logItem >= 5 ? 'blue' : 'transparent' }"
+      [ngClass]="{ white: logItem >= 5 }"
+    >
+      {{ logItem }}
+    </div>
   `,
   styles: [
     `
-      p {
-        color: blue;
+      .white {
+        color: white;
       }
     `,
   ],
 })
 export class ExercisesComponent implements OnInit {
-  username = '';
+  showSecret = false;
+  log = [];
+
+  onToggleDetails() {
+    this.showSecret = !this.showSecret;
+    this.log.push(this.log.length + 1);
+  }
 
   ngOnInit() {}
 }
